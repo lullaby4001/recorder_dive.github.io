@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DIVE WORLD</title>
+    <link rel="icon" href="asset/favicon.ico" type="image/x-icon" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="asset/loading.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+
+<body>
+    <div>
+        <header>
+            <div class="container">
+              <img src="images/recorder.png">
+              <nav class="nav">
+                <ul class="main-menu">
+                  <!-- <li><a href="#">學習紀錄</a></li> -->
+                  <li><a href="index.html">登出</a></li>
+                </ul>
+              </nav>
+            </div>
+        </header>
+        <div id="dive-app">
+        </div>
+        <iframe id="iframe" src="https://dive.nutn.edu.tw/Experiment/kaleTestExperiment5.jsp?eid=21946&record=false" frameborder="0" name="dive"></iframe>
+        <script src="https://dive.nutn.edu.tw/Experiment/js/dive.linker.js"></script>
+        <script src="js/game.js"></script>
+        <script type="module" src="js/database.js"></script>
+        <!-- <script src="js/IO.js"></script> -->
+    </div>
+</body>
+</html>

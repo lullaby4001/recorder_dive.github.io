@@ -2,37 +2,81 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DIVE WORLD</title>
-    <link rel="icon" href="asset/favicon.ico" type="image/x-icon" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="asset/loading.css" />
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
 </head>
 
 <body>
-    <div>
-        <header>
-            <div class="container">
-              <img src="images/recorder.png">
-              <nav class="nav">
-                <ul class="main-menu">
-                  <!-- <li><a href="#">學習紀錄</a></li> -->
-                  <li><a href="registerAndLogin.html">登出</a></li>
-                </ul>
-              </nav>
-            </div>
-        </header>
-        <div id="dive-app">
-        </div>
-        <iframe id="iframe" src="https://dive.nutn.edu.tw/Experiment/kaleTestExperiment5.jsp?eid=21946&record=false" frameborder="0" name="dive"></iframe>
-        <script src="https://dive.nutn.edu.tw/Experiment/js/dive.linker.js"></script>
-        <script src="js/game.js"></script>
-        <script type="module" src="js/database.js"></script>
-        <!-- <script src="js/IO.js"></script> -->
-    </div>
+  <h2>註冊新帳號</h2>
+  帳號：<input id="email">
+  密碼：<input id="password" type="password">
+  <button id="register">註冊</button>
+  <button id="login">登入</button>
+  <h3 id="message"></h3>
 </body>
 </html>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserSessionPersistence, signOut }
+            from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCUb-Q_ws3Pd8j4RbmcXtclkSUTUCcR5lw",
+    authDomain: "recorder-dive-121e4.firebaseapp.com",
+    databaseURL: "https://recorder-dive-121e4.firebaseio.com",
+    projectId: "recorder-dive-121e4",
+    storageBucket: "recorder-dive-121e4.appspot.com",
+    messagingSenderId: "653216881906",
+    appId: "1:653216881906:web:5bdf3e79c4b0a22003c46b"
+  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+
+  function create() {
+    let mail = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    if (password.length < 6) {
+      alert('密碼長度至少為六字元');
+      return
+    }
+    createUserWithEmailAndPassword(auth, mail, password)
+      .then((userCredential) => {
+        window.location.href = '../play.html';
+        console.log(userCredential.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  function account() {
+    let mail = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    signInWithEmailAndPassword(auth, mail, password)
+      .then((userCredential) => {
+        window.location.href = '../play.html';
+        
+        window.localStorage.setItem("uid",userCredential.user.uid);
+        console.log(window.localStorage.getItem("uid"));
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  var register = document.getElementById('register');
+  var login = document.getElementById('login');
+
+  register.addEventListener('click', create);
+  login.addEventListener('click', account);
+
+</script>
