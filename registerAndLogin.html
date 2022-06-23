@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+</head>
+
+<body>
+  <h2>註冊新帳號</h2>
+  帳號：<input id="email">
+  密碼：<input id="password" type="password">
+  <button id="register">註冊</button>
+  <button id="login">登入</button>
+  <h3 id="message"></h3>
+</body>
+</html>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserSessionPersistence, signOut }
+            from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCUb-Q_ws3Pd8j4RbmcXtclkSUTUCcR5lw",
+    authDomain: "recorder-dive-121e4.firebaseapp.com",
+    databaseURL: "https://recorder-dive-121e4.firebaseio.com",
+    projectId: "recorder-dive-121e4",
+    storageBucket: "recorder-dive-121e4.appspot.com",
+    messagingSenderId: "653216881906",
+    appId: "1:653216881906:web:5bdf3e79c4b0a22003c46b"
+  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+
+  function create() {
+    let mail = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    if (password.length < 6) {
+      alert('密碼長度至少為六字元');
+      return
+    }
+    createUserWithEmailAndPassword(auth, mail, password)
+      .then((userCredential) => {
+        window.location.href = '../index.html';
+        console.log(userCredential.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  function account() {
+    let mail = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    signInWithEmailAndPassword(auth, mail, password)
+      .then((userCredential) => {
+        window.location.href = '../index.html';
+        
+        window.localStorage.setItem("uid",userCredential.user.uid);
+        console.log(window.localStorage.getItem("uid"));
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  var register = document.getElementById('register');
+  var login = document.getElementById('login');
+
+  register.addEventListener('click', create);
+  login.addEventListener('click', account);
+
+</script>
